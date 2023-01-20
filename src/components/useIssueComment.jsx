@@ -7,7 +7,7 @@ export function useIssueComment(issueNumber) {
       return fetch(`/api/issues/${issueNumber}/comments`).then((res) =>
          res.json()
       );
-   });
+   },{staleTime:1000*60*1});
 }
 export function Comment({ comment, createdBy, createdDate }) {
    const userQuery = useUserData(createdBy);

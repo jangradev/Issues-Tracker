@@ -3,11 +3,15 @@ import { useQuery } from 'react-query';
 import '../index.css';
 
 export default function IndexQuery() {
-   const labelsQuery = useQuery(['labels'], () => {
-      return fetch('https://ui.dev/api/courses/react-query/labels').then(
-         (res) => res.json()
-      );
-   });
+   const labelsQuery = useQuery(
+      ['labels'],
+      () => {
+         return fetch('https://ui.dev/api/courses/react-query/labels').then(
+            (res) => res.json()
+         );
+      },
+      {staleTime:1000*60*1}
+   );
    const labels = labelsQuery.data;
    return (
       <div>

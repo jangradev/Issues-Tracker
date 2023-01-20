@@ -9,7 +9,7 @@ export default function IssuesList({ labels, status }) {
     return fetch(`/api/issues?${labelsString}${statusString}`).then((res) =>
       res.json()
     );
-  });
+  },{staleTime:1000 * 60 * 5});
   const [searchValue, setSearchValue] = useState("");
 
   const searchQuery = useQuery(
@@ -18,6 +18,8 @@ export default function IssuesList({ labels, status }) {
       fetch(`/api/search/issues?q=${searchValue}`).then((res) => res.json()),
     {
       enabled: searchValue.length > 0,
+    },{
+      staleTime:1000*60*6
     }
   );
 
