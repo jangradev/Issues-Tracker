@@ -5,12 +5,11 @@ import '../index.css';
 export default function IndexQuery() {
    const labelsQuery = useQuery(
       ['labels'],
-      () => {
-         return fetch('https://ui.dev/api/courses/react-query/labels').then(
-            (res) => res.json()
-         );
+      async ({signal}) => {
+         const res = await fetch('https://ui.dev/api/courses/react-query/labels', { signal });
+         return await res.json();
       },
-      {staleTime:1000*60*1}
+      
    );
    const labels = labelsQuery.data;
    return (

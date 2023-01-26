@@ -1,18 +1,20 @@
-import { useQuery } from 'react-query';
+import { useQuery,useQueryClient } from 'react-query';
 import { relativeDate } from '../helpers/relativeDate';
 import { useUserData } from '../helpers/useUserData';
 
 export function useIssueComment(issueNumber) {
-   return useQuery(['issues', issueNumber, 'comment'], () => {
-      return fetch(`/api/issues/${issueNumber}/comments`).then((res) =>
+   return useQuery(['issues', issueNumber, 'comment'], ({signal}) => {
+      return fetch(`/api/issues/${issueNumber}/comments`,{signal}).then((res) =>
          res.json()
       );
-   },{staleTime:1000*60*1});
+   },);
 }
 export function Comment({ comment, createdBy, createdDate }) {
    const userQuery = useUserData(createdBy);
    console.log(userQuery.data);
    if (userQuery.isLoading) return <div className='comment'></div>;
+
+
 
    <div>
       <div> Loading...</div>

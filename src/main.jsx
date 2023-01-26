@@ -3,12 +3,19 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryClient, QueryClientProvider,useQueryClient } from 'react-query';
 import { worker } from '@uidotdev/react-query-api';
 import IndexQuery from './ProblemsSolution/IndexQuery';
 import { ReactQueryDevtools } from 'react-query/devtools';
 
-const queryClientObj = new QueryClient();
+const queryClientObj = new QueryClient({
+   defaultOptions: {
+      queries: {
+         staleTime: 1000 * 60,
+      },
+   },
+});
+
 
 new Promise((res) => setTimeout(res, 100))
    .then(() =>
