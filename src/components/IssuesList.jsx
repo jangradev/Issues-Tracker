@@ -5,25 +5,35 @@ import fetchWithError from '../helpers/fetchWithError';
 import Loader from './Loader';
 
 export default function IssuesList({ labels, status }) {
+   const queryClient = useQueryClient();
+   //console.log(queryClient);
+
    const issuesQuery = useQuery(
       ['issues', { labels, status }],
-      ({ signal }) => {
+      async ({ signal }) => {
          const statusString = status ? `&status=${status}` : '';
          const labelsString = labels
             .map((label) => `labels[]=${label}`)
             .join('&');
-         return fetchWithError(
+         const results = await fetchWithError(
             `/api/issues?${labelsString}${statusString}`,
             { signal },
             {
                headers: { 'x-error': true },
             }
          );
+         results.forEach((element) => {
+            queryClient.setQueryData(
+               ['issues', element.number.toString()],
+               element
+            );
+         });
+         return results;
       },
       { staleTime: 1000 * 60, retry: true }
    );
    const [searchValue, setSearchValue] = useState('');
-   console.log(issuesQuery);
+
    const searchQuery = useQuery(
       ['issues', 'search', searchValue],
       ({ signal }) =>

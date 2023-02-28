@@ -5,8 +5,9 @@ import { useUserData } from '../helpers/useUserData';
 import { relativeDate } from '../helpers/relativeDate';
 
 export function useIssueData(issueNumber) {
-   return useQuery(['issues', issueNumber], () => {
-      return fetch(`/api/issues/${issueNumber}`).then((res) => res.json());
+   return useQuery(['issues', issueNumber], async ({ signal }) => {
+      const res = await fetch(`/api/issues/${issueNumber}`, { signal });
+      return await res.json();
    });
 }
 export const IssueHeader = ({
@@ -18,8 +19,9 @@ export const IssueHeader = ({
    comments,
 }) => {
    const statusObject = possibleStatus.find((pstatus) => pstatus.id == status);
+
    const createdUser = useUserData(createdBy);
-   console.log('created user query', createdUser.data);
+
    return (
       <header>
          <h2>
@@ -38,7 +40,7 @@ export const IssueHeader = ({
                   <GoIssueOpened />
                )}
 
-               {statusObject.label}
+               {statusObject?.label}
             </span>
             <span className='created-by'>
                {createdBy.isLoading ? '...' : createdUser.data?.name}

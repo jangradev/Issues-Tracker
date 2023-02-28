@@ -8,8 +8,6 @@ export default function IssueDetails() {
    const { number } = dataParam;
    const issueQuery = useIssueData(number);
    const commentQuery = useIssueComment(number);
-   console.log('Comments Query Data', commentQuery.data);
-   console.log('Issue Query Data', issueQuery.data);
 
    return (
       <div className='issue-details'>
