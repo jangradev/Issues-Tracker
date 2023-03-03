@@ -3,7 +3,6 @@ import StatusSelect from './StatusSelect';
 
 export default function IssueStatus({ status, issueNumber }) {
    const queryClient = useQueryClient();
-
    const setStatus = useMutation(
       (status) => {
          return fetch(`/api/issues/${issueNumber}`, {
@@ -12,7 +11,6 @@ export default function IssueStatus({ status, issueNumber }) {
             body: JSON.stringify({ status }),
          }).then((res) => res.json());
       },
-
       {
          onMutate: (status) => {
             const oldStatus = queryClient.getQueryData([

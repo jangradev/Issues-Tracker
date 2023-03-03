@@ -42,8 +42,8 @@ export default function IssuesList({ labels, status }) {
    );
 
    const queryClient = useQueryClient();
-   console.log('issuesQuery', issuesQuery);
-   console.log('SearchQuery', searchQuery);
+   //console.log('issuesQuery', issuesQuery);
+   // console.log('SearchQuery', searchQuery);
 
    return (
       <div>

@@ -16,12 +16,12 @@ export default function IssueAssignment({ assignee, issueNumber }) {
       },
       {
          onMutate: (assignee) => {
-            console.log('onMutate Data--', assignee);
+            // console.log('onMutate Data--', assignee);
             const oldAssignee = queryClient.getQueryData([
                'issues',
                issueNumber,
             ]).assignee;
-            console.log(oldAssignee);
+            // console.log(oldAssignee);
             queryClient.setQueryData(['issues', issueNumber], (data) => ({
                ...data,
                assignee,
@@ -50,7 +50,7 @@ export default function IssueAssignment({ assignee, issueNumber }) {
    );
    //console.log('userQuery', userQuery);s
    const user = useUserData(assignee);
-   console.log('user--->', user);
+   //console.log('user--->', user);
    return (
       <div className='issue-options'>
          <div>

@@ -2,6 +2,7 @@ import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
 import IssueAssignment from './IssueeAssignment';
 import { useIssueData, IssueHeader } from './IssueHeader';
+import IssueLabel from './IssueLabel';
 import IssueStatus from './IssueStatus';
 import { useIssueComment, Comment } from './useIssueComment';
 
@@ -10,7 +11,7 @@ export default function IssueDetails() {
    const { number } = dataParam;
    const issueQuery = useIssueData(number);
    const commentQuery = useIssueComment(number);
-   console.log('issue Query', issueQuery);
+   // console.log('issue Query', issueQuery);
 
    return (
       <div className='issue-details'>
@@ -36,6 +37,10 @@ export default function IssueDetails() {
                      />
                      <IssueAssignment
                         assignee={issueQuery.data.assignee}
+                        issueNumber={issueQuery.data.number.toString()}
+                     />
+                     <IssueLabel
+                        labels={issueQuery.data.labels}
                         issueNumber={issueQuery.data.number.toString()}
                      />
                   </aside>
