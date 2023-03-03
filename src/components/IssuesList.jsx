@@ -5,9 +5,7 @@ import fetchWithError from '../helpers/fetchWithError';
 import Loader from './Loader';
 
 export default function IssuesList({ labels, status }) {
-   const queryClient = useQueryClient();
-   //console.log(queryClient);
-
+   const [searchValue, setSearchValue] = useState('');
    const issuesQuery = useQuery(
       ['issues', { labels, status }],
       async ({ signal }) => {
@@ -32,8 +30,6 @@ export default function IssuesList({ labels, status }) {
       },
       { staleTime: 1000 * 60, retry: true }
    );
-   const [searchValue, setSearchValue] = useState('');
-
    const searchQuery = useQuery(
       ['issues', 'search', searchValue],
       ({ signal }) =>
@@ -44,6 +40,10 @@ export default function IssuesList({ labels, status }) {
          enabled: searchValue.length > 0,
       }
    );
+
+   const queryClient = useQueryClient();
+   console.log('issuesQuery', issuesQuery);
+   console.log('SearchQuery', searchQuery);
 
    return (
       <div>

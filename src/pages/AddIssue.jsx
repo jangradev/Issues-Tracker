@@ -20,6 +20,11 @@ export default function AddIssue() {
             queryClient.setQueryData(['issues', data.number.toString()], data);
             navigate(`/issue/${data.number}`);
          },
+      },
+      {
+         onSettled: (data) => {
+            console.log(data);
+         },
       }
    );
    return (
