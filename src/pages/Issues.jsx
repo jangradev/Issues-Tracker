@@ -7,12 +7,18 @@ import { Link } from 'react-router-dom';
 export default function Issues() {
    const [labelsArray, setLabelsArray] = React.useState([]);
    const [status, setStatus] = React.useState('');
+   const [pageNum, setPageNum] = React.useState(1);
    return (
       <div>
          <main>
             <section>
                <h1>Issues</h1>
-               <IssuesList labels={labelsArray} status={status} />
+               <IssuesList
+                  labels={labelsArray}
+                  status={status}
+                  pageNum={pageNum}
+                  setPageNum={setPageNum}
+               />
             </section>
             <aside>
                <LabelList
@@ -25,16 +31,23 @@ export default function Issues() {
                              )
                            : currentLabels.concat(clickedLabel)
                      );
+                     setPageNum(1);
                   }}
                />
                <h3>Status</h3>
                <StatusSelect
                   value={status}
-                  onChange={(event) => setStatus(event.target.value)}
+                  onChange={(event) => {
+                     setStatus(event.target.value);
+                     setPageNum(1);
+                  }}
                />
                <hr />
                <Link className='button' to='/add'>
                   Add Issue
+               </Link>
+               <Link className='button' to='/pagination'>
+                  Pagination
                </Link>
             </aside>
          </main>

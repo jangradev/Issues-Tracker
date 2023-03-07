@@ -1,15 +1,39 @@
-import { useQuery, useQueryClient } from 'react-query';
+import { useInfiniteQuery, useQuery, useQueryClient } from 'react-query';
 import { relativeDate } from '../helpers/relativeDate';
 import { useUserData } from '../helpers/useUserData';
 
+// export function useIssueComment(issueNumber) {
+//    return useQuery(['issues', issueNumber, 'comments'], async ({ signal }) => {
+//       const res = await fetch(`/api/issues/${issueNumber}/comments`, {
+//          signal,
+//       });
+//       return await res.json();
+//    });
+// }
+
 export function useIssueComment(issueNumber) {
-   return useQuery(['issues', issueNumber, 'comments'], async ({ signal }) => {
-      const res = await fetch(`/api/issues/${issueNumber}/comments`, {
-         signal,
-      });
-      return await res.json();
-   });
+   return useInfiniteQuery(
+      ['issues', issueNumber, 'comments'],
+      async (Obj) => {
+         console.log('Object Received in useInfiniteQuery--', Obj);
+         const { signal, pageParam = 1 } = Obj;
+         const res = await fetch(
+            `/api/issues/${issueNumber}/comments?pages=${pageParam}`,
+            {
+               signal,
+            }
+         );
+         return await res.json();
+      },
+      {
+         getNextPageParam: (lastPage, pages) => {
+            if (lastPage.length === 0) return;
+            return pages.length + 1;
+         },
+      }
+   );
 }
+
 export function Comment({ comment, createdBy, createdDate }) {
    const userQuery = useUserData(createdBy);
    //console.log(userQuery.data);

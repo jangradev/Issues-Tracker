@@ -6,7 +6,7 @@ export default function AddIssue() {
    const navigate = useNavigate();
    const addIssue = useMutation(
       (issueBody) => {
-         console.log(issueBody);
+         // console.log(issueBody);
          return fetch('/api/issues', {
             method: 'post',
             headers: { 'content-type': 'application/json' },
@@ -15,7 +15,7 @@ export default function AddIssue() {
       },
       {
          onSuccess: (data) => {
-            console.log(data);
+            // console.log(data);
             queryClient.invalidateQueries(['issues'], { exact: true });
             queryClient.setQueryData(['issues', data.number.toString()], data);
             navigate(`/issue/${data.number}`);
@@ -23,7 +23,7 @@ export default function AddIssue() {
       },
       {
          onSettled: (data) => {
-            console.log(data);
+            // console.log(data);
          },
       }
    );
