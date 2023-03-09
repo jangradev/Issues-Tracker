@@ -7,7 +7,6 @@ const fetchInfiniteIssues = async ({ queryKey, pageParam = 5 }) => {
       `https://api.github.com/repos/${org}/${repo}/issues?page=${pageParam}`
    );
    const result = await response.json();
-
    return { issueList: result, pageParam };
 };
 
@@ -22,7 +21,6 @@ function useScrollToBottomAction(container, callBack, offset = 0) {
       const handleScroll = () => {
          let scrollContainer =
             container === document ? document.scrollingElement : container;
-
          if (
             scrollContainer.scrollTop + scrollContainer.clientHeight >=
             scrollContainer.scrollHeight - offset
